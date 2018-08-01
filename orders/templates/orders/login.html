@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <h2>Login</h2>
+    {% if form.errors %}
+        <p>Username/Password Error. Please Try Again</p>
+    {% endif %}
+    {% if message %}
+        <div class="alert alert-warning" role="alert">
+            {{ message }}
+        </div>
+    {% endif %}
+    <form action="{% url 'login_view' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}" />
+        {% for field in form %}
+            <p>
+                {{ field.label_tag }}
+                {{ field }}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+                {% if field.help_text %}
+                    <p>{{ field.help_text }}</p>
+                {% endif %}
+            </p>
+        {% endfor %}
+        <input class="form-control" name="username" type="text" placeholder="Enter Username"/>
+        <br>
+        <input class="form-control" name="password" type="password" placeholder="Enter Password"/>
+        <br>
+        <button class="btn btn-primary" type="submit" value="Login">Log In</button>
+    </form>
+{% endblock %}
