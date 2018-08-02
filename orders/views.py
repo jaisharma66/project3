@@ -67,7 +67,11 @@ def view_cart(request):
     username = request.user.username
     ordered_item = Orders.objects.filter(user = username)
     print(ordered_item)
+    added_price = 0
+    for prices in range(len(ordered_item)):
+        added_price = added_price + ordered_item[prices].price
     context = {
         "ordered_item": ordered_item,
+        "added_price": added_price,
     }
     return render(request, 'orders/cart.html', context)
