@@ -7,6 +7,7 @@
             <th scope="col">User</th>
             <th scope="col">Order Items</th>
             <th scope="col">Price</th>
+            <th scope="col">Toppings</th>
             <th scope="col">Remove Order</th>
         </thead>
         <tbody>
@@ -15,6 +16,7 @@
                 <td>{{ retrieve.user }}</td>
                 <td>{{ retrieve.order_items }}</td>
                 <td>{{ retrieve.price }}</td>
+                <td>{{ retrieve.toppings }}</td>
                 <td><a class="btn btn-info" href="{% url 'remove_admin' retrieve.id %}">Delete Item</a></td>
             </tr>
         {% endfor %}

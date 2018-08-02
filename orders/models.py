@@ -50,3 +50,10 @@ class Orders(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=6)
     topping = models.IntegerField()
     toppings = models.CharField(null=True,blank=True,max_length = 1024)
+
+class Orders_Confirmed(models.Model):
+    user = models.CharField(max_length = 64)
+    order_items = models.CharField(max_length = 1024)
+    price = models.DecimalField(decimal_places=2, max_digits=6)
+    topping = models.IntegerField()
+    toppings = models.CharField(null=True,blank=True,max_length = 1024)

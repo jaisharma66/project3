@@ -82,13 +82,36 @@ def view_cart(request):
 
 @login_required
 def confirm_order(request):
-    select = request.POST["selectbox"]
-    print(select + " This is the select")
-    return redirect('index')
+    selectbox = request.POST.getlist("selectbox")
+    print(selectbox, " Selectbox options.")
+    username = request.user.username
+    confirmed_orders = Orders.objects.filter(user = username)
+    y=0
+    for x in range(len(confirmed_orders)):
+        if confirmed_orders[x].topping == 0:
+            entered = Orders_Confirmed(user=username, order_items=confirmed_orders[x].order_items, price=confirmed_orders[x].price, topping=confirmed_orders[x].topping, toppings=None)
+            entered.save()
+        elif confirmed_orders[x].topping == 1:
+            entered1 = Orders_Confirmed(user=username, order_items=confirmed_orders[x].order_items, price=confirmed_orders[x].price, topping=confirmed_orders[x].topping, toppings=selectbox[y])
+            y = y + 1
+            entered1.save()
+        elif confirmed_orders[x].topping == 2:
+            entered2 = Orders_Confirmed(user=username, order_items=confirmed_orders[x].order_items, price=confirmed_orders[x].price, topping=confirmed_orders[x].topping, toppings=selectbox[y] + ", " + selectbox[y + 1])
+            y = y + 2
+            entered.save()
+        elif confirmed_orders[x].topping == 3:
+            entered3 = Orders_Confirmed(user=username, order_items=confirmed_orders[x].order_items, price=confirmed_orders[x].price, topping=confirmed_orders[x].topping, toppings=selectbox[y] + ", " + selectbox[y + 1] + ", " + selectbox[y + 2])
+            y = y + 3
+            entered3.save()
+        elif confirmed_orders[x].topping == 4:
+            entered4 = entered2 = Orders_Confirmed(user=username, order_items=confirmed_orders[x].order_items, price=confirmed_orders[x].price, topping=confirmed_orders[x].topping, toppings=selectbox[y] + ", " + selectbox[y + 1] + ", " + selectbox[y + 2] + ", " + selectbox[y + 3])
+            y = y + 4
+            entered4.save()
+    return render(request, 'orders/confirmed.html')
 
 @login_required
 def order_admin(request):
-    total_orders = Orders.objects.all()
+    total_orders = Orders_Confirmed.objects.all()
     context = {
         "total_orders": total_orders
     }
