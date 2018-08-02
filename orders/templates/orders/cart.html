@@ -2,20 +2,54 @@
 
 {% block content %}
     <center><div><h1>Your Cart</h1></div></center>
-    <table class = "table table-striped">
-        <thead>
-            <th scope="col">Ordered Items</th>
-            <th scope="col">Price</th>
-        </thead>
-        <tbody>
-        {% for retrieve in ordered_item %}
-            <tr>
-                <td>{{ retrieve.order_items }}</td>
-                <td>{{ retrieve.price }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <h3>Total Price: ${{ added_price }}</h3>
+    <form action="{% url 'confirm_order' %}" method="post">
+        {% csrf_token %}
+        <table class = "table table-striped">
+            <thead>
+                <th scope="col">Ordered Items</th>
+                <th scope="col">Price</th>
+                <th scope="col">Possible Toppings</th>
+                <th scope="col">Delete Order</th>
+            </thead>
+            <tbody>
+            {% for retrieve in ordered_item %}
+                <tr>
+                    <td>{{ retrieve.order_items }}</td>
+                    <td>{{ retrieve.price }}</td>
+                    <td>
+                    {% with ''|center:retrieve.topping as range %}
+                    {% for toppings in range %}
+                        <select class="form-control form-control-sm" name="selectbox">
+                            <option>Pepperoni</option>
+                            <option>Sausage</option>
+                            <option>Mushrooms</option>
+                            <option>Onions</option>
+                            <option>Ham</option>
+                            <option>Canadian Bacon</option>
+                            <option>Pineapple</option>
+                            <option>Eggplant</option>
+                            <option>Tomato and Basil</option>
+                            <option>Green Peppers</option>
+                            <option>Hamburger</option>
+                            <option>Spinach</option>
+                            <option>Artichoke</option>
+                            <option>Buffalo Chicken</option>
+                            <option>Barbecue Chicken</option>
+                            <option>Anchovies</option>
+                            <option>Black Olives</option>
+                            <option>Fresh Garlic</option>
+                            <option>Zucchini</option>
+                        </select>
+                    {% endfor %}
+                    {% endwith %}
+                    </td>
+                    <td><a class="btn btn-info" href="{% url 'remove_user' retrieve.id %}">Delete Item</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <h3>Total Price: ${{ added_price }}</h3>
+        <button class="btn btn-primary" type="submit">Confirm Order</button>
+    </form>
     <a href="{% url 'index' %}" class="btn btn-primary">Back</a>
 {% endblock %}

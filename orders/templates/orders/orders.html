@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <center><h2>All Orders</h2></center>
+    <table class = "table table-striped">
+        <thead>
+            <th scope="col">User</th>
+            <th scope="col">Order Items</th>
+            <th scope="col">Price</th>
+            <th scope="col">Remove Order</th>
+        </thead>
+        <tbody>
+        {% for retrieve in total_orders %}
+            <tr>
+                <td>{{ retrieve.user }}</td>
+                <td>{{ retrieve.order_items }}</td>
+                <td>{{ retrieve.price }}</td>
+                <td><a class="btn btn-info" href="{% url 'remove_admin' retrieve.id %}">Delete Item</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-primary" href="{% url 'index' %}">Back</a>
+{% endblock %}

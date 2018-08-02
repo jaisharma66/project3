@@ -2,7 +2,9 @@
 
 {% block content %}
     <center><div><h1>Welcome, {{ user.username }}</h1></div></center>
-
+    {% if user.is_superuser %}
+       <a class="btn btn-secondary btn-lg btn-block" href="{% url 'order_admin' %}">View All Orders</a>
+    {% endif %}
     <a class="btn btn-primary btn-lg btn-block" href="{% url 'view_cart' %}">View Cart</a>
     <br>
 
@@ -20,9 +22,9 @@
             <tr>
                 <td>{{ retrieve.type_pizza }}</td>
                 <td>{{ retrieve.small }}</td>
-                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_pizza retrieve.small %}">Add to Cart</a></td>
+                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_pizza retrieve.small retrieve.topping %}">Add to Cart</a></td>
                 <td>{{ retrieve.large }}</td>
-                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_pizza retrieve.large %}">Add to Cart</a></td>
+                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_pizza retrieve.large retrieve.topping %}">Add to Cart</a></td>
             </tr>
         {% endfor %}
         </tbody>
@@ -42,9 +44,9 @@
             <tr>
                 <td>{{ retrieve.type_pizza }}</td>
                 <td>{{ retrieve.small }}</td>
-                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_pizza retrieve.small %}">Add to Cart</a></td>
+                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_pizza retrieve.small retrieve.topping %}">Add to Cart</a></td>
                 <td>{{ retrieve.large }}</td>
-                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_pizza retrieve.large %}">Add to Cart</a></td>
+                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_pizza retrieve.large retrieve.topping %}">Add to Cart</a></td>
             </tr>
         {% endfor %}
         </tbody>
@@ -68,13 +70,13 @@
             <tr>
                 <td>{{ retrieve.type_subs }}</td>
                 <td>{{ retrieve.small }}</td>
-                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_subs retrieve.small %}">Add to Cart</a></td>
+                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_subs retrieve.small retrieve.topping %}">Add to Cart</a></td>
                 <td>{{ retrieve.large }}</td>
-                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_subs retrieve.large %}">Add to Cart</a></td>
+                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_subs retrieve.large retrieve.topping %}">Add to Cart</a></td>
                 <td>{{ retrieve.small_cheese }}</td>
-                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_subs retrieve.small_cheese %}">Add to Cart</a></td>
+                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_subs retrieve.small_cheese retrieve.topping %}">Add to Cart</a></td>
                 <td>{{ retrieve.large_cheese }}</td>
-                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_subs retrieve.large_cheese %}">Add to Cart</a></td>
+                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_subs retrieve.large_cheese retrieve.topping %}">Add to Cart</a></td>
             </tr>
         {% endfor %}
         </tbody>
@@ -92,7 +94,7 @@
             <tr>
                 <td>{{ retrieve.type_pasta }}</td>
                 <td>{{ retrieve.price }}</td>
-                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_pasta retrieve.price %}">Add to Cart</a></td>
+                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_pasta retrieve.price retrieve.topping %}">Add to Cart</a></td>
             </tr>
         {% endfor %}
         </tbody>
@@ -110,7 +112,7 @@
             <tr>
                 <td>{{ retrieve.type_salad }}</td>
                 <td>{{ retrieve.price }}</td>
-                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_salad retrieve.price %}">Add to Cart</a></td>
+                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_salad retrieve.price retrieve.topping %}">Add to Cart</a></td>
             </tr>
         {% endfor %}
         </tbody>
@@ -130,9 +132,9 @@
             <tr>
                 <td>{{ retrieve.type_dinner_platters }}</td>
                 <td>{{ retrieve.small }}</td>
-                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_dinner_platters retrieve.small %}">Add to Cart</a></td>
+                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_dinner_platters retrieve.small retrieve.topping %}">Add to Cart</a></td>
                 <td>{{ retrieve.large }}</td>
-                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_dinner_platters retrieve.large %}">Add to Cart</a></td>
+                <td><a class="btn btn-info" href="{% url 'carted' retrieve.type_dinner_platters retrieve.large retrieve.topping %}">Add to Cart</a></td>
             </tr>
         {% endfor %}
         </tbody>

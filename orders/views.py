@@ -56,9 +56,9 @@ def login_r(request):
     return render(request, 'orders/login.html')
 
 @login_required
-def carted(request, type_p, price):
+def carted(request, type_p, price, topping):
     username = request.user.username
-    orders = Orders(user=username, order_items=type_p, price=price)
+    orders = Orders(user=username, order_items=type_p, price=price, topping=topping, toppings=None)
     orders.save()
     return redirect('index')
 
@@ -68,10 +68,43 @@ def view_cart(request):
     ordered_item = Orders.objects.filter(user = username)
     print(ordered_item)
     added_price = 0
+    topping_arr = []
     for prices in range(len(ordered_item)):
         added_price = added_price + ordered_item[prices].price
+    for x in range(len(ordered_item)):
+        topping_arr.append(ordered_item[x].topping)
     context = {
         "ordered_item": ordered_item,
         "added_price": added_price,
+        "topping":  topping_arr
     }
     return render(request, 'orders/cart.html', context)
+
+@login_required
+def confirm_order(request):
+    select = request.POST["selectbox"]
+    print(select + " This is the select")
+    return redirect('index')
+
+@login_required
+def order_admin(request):
+    total_orders = Orders.objects.all()
+    context = {
+        "total_orders": total_orders
+    }
+    if request.user.is_superuser:
+        return render(request, 'orders/orders.html', context)
+    else:
+        return redirect('index')
+
+@login_required
+def remove_admin(request, identification):
+    delete_row = Orders.objects.filter(id = identification)
+    delete_row.delete()
+    return redirect('order_admin')
+
+@login_required
+def remove_user(request, identification):
+    delete_row = Orders.objects.filter(id = identification)
+    delete_row.delete()
+    return redirect('view_cart')
