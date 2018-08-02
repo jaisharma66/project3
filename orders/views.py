@@ -54,3 +54,20 @@ def logout_view(request):
 
 def login_r(request):
     return render(request, 'orders/login.html')
+
+@login_required
+def carted(request, type_p, price):
+    username = request.user.username
+    orders = Orders(user=username, order_items=type_p, price=price)
+    orders.save()
+    return redirect('index')
+
+@login_required
+def view_cart(request):
+    username = request.user.username
+    ordered_item = Orders.objects.filter(user = username)
+    print(ordered_item)
+    context = {
+        "ordered_item": ordered_item,
+    }
+    return render(request, 'orders/cart.html', context)

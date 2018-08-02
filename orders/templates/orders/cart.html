@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <center><div><h1>Your Cart</h1></div></center>
+    <table class = "table table-striped">
+        <thead>
+            <th scope="col">Ordered Items</th>
+            <th scope="col">Price</th>
+        </thead>
+        <tbody>
+        {% for retrieve in ordered_item %}
+            <tr>
+                <td>{{ retrieve.order_items }}</td>
+                <td>{{ retrieve.price }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <h3>Total Price: {{ added_price }}</h3>
+    <a href="{% url 'index' %}" class="btn btn-primary">Back</a>
+{% endblock %}

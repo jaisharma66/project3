@@ -11,6 +11,8 @@ urlpatterns = [
     path("login", views.login_view, name="login_view"),
     path("logout", views.logout_view, name="logout_view"),
     path("login_r", views.login_r, name="login_r"),
+    path("carted/<type_p>/<price>", views.carted, name="carted"),
+    path("view_cart", views.view_cart, name="view_cart"),
     # path('login/', auth_views.login, {'template_name': 'login.html'}, name='login'),
     # path('logout/', auth_views.logout, {'next_page': 'login'}, name='logout'),
 ]
