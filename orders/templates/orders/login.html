@@ -1,10 +1,13 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+    <!-- Login page -->
     <h2>Login</h2>
+    <!-- If authentication error, displays -->
     {% if form.errors %}
         <p>Username/Password Error. Please Try Again</p>
     {% endif %}
+    <!-- Alerts if a message is sent -->
     {% if message %}
         <div class="alert alert-warning" role="alert">
             {{ message }}

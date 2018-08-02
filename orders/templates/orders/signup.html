@@ -1,7 +1,10 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+    <!-- Sign Up HTML Page -->
     <h2>Sign Up</h2>
+    <!-- Displays signup page and fields -->
+    <!-- Small problem with signup help text display -->
     <form method="post">
         {% csrf_token %}
         {% for field in form %}

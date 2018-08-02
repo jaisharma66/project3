@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+    <!-- Displays the menu, where users can add items -->
     <center><div><h1>Welcome, {{ user.username }}</h1></div></center>
     {% if user.is_superuser %}
        <a class="btn btn-secondary btn-lg btn-block" href="{% url 'order_admin' %}">View All Orders</a>

@@ -5,6 +5,7 @@ from . import views
 
 from orders import views as orders_views
 
+# All of the users' paths that are visitable
 urlpatterns = [
     path("", views.signup, name="signup"),
     path("index", views.index, name="index"),
@@ -17,6 +18,4 @@ urlpatterns = [
     path("order_admin", views.order_admin, name="order_admin"),
     path("remove_admin/<identification>", views.remove_admin, name="remove_admin"),
     path("remove_user/<identification>", views.remove_user, name="remove_user"),
-    # path('login/', auth_views.login, {'template_name': 'login.html'}, name='login'),
-    # path('logout/', auth_views.logout, {'next_page': 'login'}, name='logout'),
 ]

@@ -10,14 +10,12 @@ class Regular_Pizza(models.Model):
     small = models.DecimalField(decimal_places=2,max_digits=4)
     large = models.DecimalField(decimal_places=2,max_digits=4)
     topping = models.IntegerField()
-    # toppings = models.ManyToManyField(Topping)
 
 class Sicilian_Pizza(models.Model):
     type_pizza = models.CharField(max_length = 16)
     small = models.DecimalField(decimal_places=2,max_digits=4)
     large = models.DecimalField(decimal_places=2,max_digits=4)
     topping = models.IntegerField()
-    # toppings = models.ManyToManyField(Topping, null=True)
 
 class Subs(models.Model):
     type_subs = models.CharField(max_length = 64)
@@ -46,7 +44,6 @@ class Dinner_Platters(models.Model):
 class Orders(models.Model):
     user = models.CharField(max_length = 64)
     order_items = models.CharField(max_length = 1024)
-    # toppings = models.CharField(null=True, max_length = 128) Integer Field perhaps?
     price = models.DecimalField(decimal_places=2, max_digits=6)
     topping = models.IntegerField()
     toppings = models.CharField(null=True,blank=True,max_length = 1024)

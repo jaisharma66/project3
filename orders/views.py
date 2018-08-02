@@ -10,7 +10,6 @@ from .models import *
 # Create your views here.
 @login_required
 def index(request):
-    print("entering index function")
     context = {
         "topping": Topping.objects.all(),
         "regular_pizza": Regular_Pizza.objects.all(),
@@ -24,6 +23,7 @@ def index(request):
 
 # Code learned and used from simpleisbetterthancomplex.com
 def signup(request):
+    # Method to signup users using their name and saving it to a form in the DB
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -37,10 +37,10 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'orders/signup.html', {'form': form})
 
+# Checks to see if the users login credentials are correct. Retrieves from the form
 def login_view(request):
     username = request.POST["username"]
     password = request.POST["password"]
-    print("login_view entered. The username is " + username + " the password is " + password)
     user = authenticate(request, username=username, password=password)
     if user is not None:
         login(request, user)
@@ -48,13 +48,16 @@ def login_view(request):
     else:
         return render(request, 'orders/login.html', {"message": "Invalid credentials."})
 
+# Logs the user out and renders the login template
 def logout_view(request):
     logout(request)
     return render(request, 'orders/login.html', {"message": "Logged out."})
 
+# Redirects the user to the login page as seen in HTML
 def login_r(request):
     return render(request, 'orders/login.html')
 
+# Adds the users item to the database to be displayed in their cart
 @login_required
 def carted(request, type_p, price, topping):
     username = request.user.username
@@ -62,17 +65,19 @@ def carted(request, type_p, price, topping):
     orders.save()
     return redirect('index')
 
+# Gets the users cart from the database and displays it. Also displays the total price passed as a var
 @login_required
 def view_cart(request):
     username = request.user.username
     ordered_item = Orders.objects.filter(user = username)
-    print(ordered_item)
     added_price = 0
     topping_arr = []
     for prices in range(len(ordered_item)):
         added_price = added_price + ordered_item[prices].price
     for x in range(len(ordered_item)):
         topping_arr.append(ordered_item[x].topping)
+    # Context dictionary passes an array that describes the number of toppings on a specific item
+    # Correlates with HTML
     context = {
         "ordered_item": ordered_item,
         "added_price": added_price,
@@ -80,13 +85,16 @@ def view_cart(request):
     }
     return render(request, 'orders/cart.html', context)
 
+# Confirms the users order and adds it to the admin site
 @login_required
 def confirm_order(request):
     selectbox = request.POST.getlist("selectbox")
-    print(selectbox, " Selectbox options.")
     username = request.user.username
     confirmed_orders = Orders.objects.filter(user = username)
+    # Var y that is incremented to go through selectbox list
     y=0
+    # These checks check to see how many toppings an item has, and depending on that, adds those toppings from the selectbox list.
+    # After it adds it to the list, it increments forward by the amount of toppings present in that specific item
     for x in range(len(confirmed_orders)):
         if confirmed_orders[x].topping == 0:
             entered = Orders_Confirmed(user=username, order_items=confirmed_orders[x].order_items, price=confirmed_orders[x].price, topping=confirmed_orders[x].topping, toppings=None)
@@ -109,6 +117,7 @@ def confirm_order(request):
             entered4.save()
     return render(request, 'orders/confirmed.html')
 
+# Checks if the user is a superuser and sends them to the appropriate all orders page.
 @login_required
 def order_admin(request):
     total_orders = Orders_Confirmed.objects.all()
@@ -120,12 +129,14 @@ def order_admin(request):
     else:
         return redirect('index')
 
+# An admin tool that removes an order. This is the personal touch
 @login_required
 def remove_admin(request, identification):
     delete_row = Orders.objects.filter(id = identification)
     delete_row.delete()
     return redirect('order_admin')
 
+# A user tool that removes an order. This is the personal touch
 @login_required
 def remove_user(request, identification):
     delete_row = Orders.objects.filter(id = identification)

@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+    <!-- Displays cart and allows the user to delete and confirm their options -->
     <center><div><h1>Your Cart</h1></div></center>
     <form action="{% url 'confirm_order' %}" method="post">
         {% csrf_token %}
