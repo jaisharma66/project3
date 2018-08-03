@@ -132,7 +132,7 @@ def order_admin(request):
 # An admin tool that removes an order. This is the personal touch
 @login_required
 def remove_admin(request, identification):
-    delete_row = Orders.objects.filter(id = identification)
+    delete_row = Orders_Confirmed.objects.filter(id = identification)
     delete_row.delete()
     return redirect('order_admin')
 
